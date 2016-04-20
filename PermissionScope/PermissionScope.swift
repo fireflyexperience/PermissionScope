@@ -81,14 +81,14 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     }()
     
     /// Default status for Core Motion Activity
-    var motionPermissionStatus: PermissionStatus = .Unknown
+    internal var motionPermissionStatus: PermissionStatus = .Unknown
 
     // MARK: - Internal state and resolution
     
     /// Permissions configured using `addPermission(:)`
-    var configuredPermissions: [Permission] = []
-    var permissionButtons: [UIButton]       = []
-    var permissionLabels: [UILabel]         = []
+    internal var configuredPermissions: [Permission] = []
+    internal var permissionButtons: [UIButton]       = []
+    internal var permissionLabels: [UILabel]         = []
 	
 	// Useful for direct use of the request* methods
     
@@ -107,7 +107,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - parameter completion: Closure used to send the result of the check.
     */
-    func allAuthorized(completion: (Bool) -> Void ) {
+    internal func allAuthorized(completion: (Bool) -> Void ) {
         getResultsForConfig{ results in
             let result = results
                 .first { $0.status != .Authorized }
@@ -122,7 +122,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - parameter completion: Closure used to send the result of the check.
     */
-    func requiredAuthorized(completion: (Bool) -> Void ) {
+    internal func requiredAuthorized(completion: (Bool) -> Void ) {
         getResultsForConfig{ results in
             let result = results
                 .first { $0.status != .Authorized }
@@ -318,7 +318,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - returns: UIButton instance with a custom style.
     */
-    func permissionStyledButton(type: PermissionType) -> UIButton {
+    internal func permissionStyledButton(type: PermissionType) -> UIButton {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 220, height: 40))
         button.setTitleColor(permissionButtonTextColor, forState: .Normal)
         button.titleLabel?.font = buttonFont
@@ -345,7 +345,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - parameter button: Permission button
     */
-    func setButtonAuthorizedStyle(button: UIButton) {
+    internal func setButtonAuthorizedStyle(button: UIButton) {
         button.layer.borderWidth = 0
         button.backgroundColor = authorizedButtonColor
         button.setTitleColor(.whiteColor(), forState: .Normal)
@@ -356,7 +356,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - parameter button: Permission button
     */
-    func setButtonUnauthorizedStyle(button: UIButton) {
+    internal func setButtonUnauthorizedStyle(button: UIButton) {
         button.layer.borderWidth = 0
         button.backgroundColor = unauthorizedButtonColor ?? authorizedButtonColor.inverseColor
         button.setTitleColor(.whiteColor(), forState: .Normal)
@@ -369,7 +369,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - returns: UILabel instance with a custom style.
     */
-    func permissionStyledLabel(type: PermissionType) -> UILabel {
+    internal func permissionStyledLabel(type: PermissionType) -> UILabel {
         let label  = UILabel(frame: CGRect(x: 0, y: 0, width: 260, height: 50))
         label.font = labelFont
         label.numberOfLines = 2
@@ -564,7 +564,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     This function is called when we want to show the notifications
     alert, kicking off the entire process.
     */
-    func showingNotificationPermission() {
+    internal func showingNotificationPermission() {
         let notifCenter = NSNotificationCenter.defaultCenter()
         
         notifCenter
@@ -582,7 +582,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     A timer that fires the event to let us know the user has asked for 
     notifications permission.
     */
-    var notificationTimer : NSTimer?
+    internal var notificationTimer : NSTimer?
 
     /**
     This function is triggered when the app becomes 'active' again after
@@ -591,7 +591,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     See `showingNotificationPermission` for a more detailed description
     of the entire process.
     */
-    func finishedShowingNotificationPermission () {
+    internal func finishedShowingNotificationPermission () {
         NSNotificationCenter.defaultCenter().removeObserver(self,
             name: UIApplicationWillResignActiveNotification,
             object: nil)
@@ -840,7 +840,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     // MARK: Bluetooth
     
     /// Returns whether Bluetooth access was asked before or not.
-    private var askedBluetooth:Bool {
+    internal var askedBluetooth:Bool {
         get {
             return defaults.boolForKey(Constants.NSUserDefaultsKeys.requestedBluetooth)
         }
@@ -902,7 +902,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     Start and immediately stop bluetooth advertising to trigger
     its permission dialog.
     */
-    private func triggerBluetoothStatusUpdate() {
+    internal func triggerBluetoothStatusUpdate() {
         if !waitingForBluetooth && bluetoothManager.state == .Unknown {
             bluetoothManager.startAdvertising(nil)
             bluetoothManager.stopAdvertising()
@@ -970,7 +970,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     }
     
     /// Returns whether Bluetooth access was asked before or not.
-    private var askedMotion:Bool {
+    internal var askedMotion:Bool {
         get {
             return defaults.boolForKey(Constants.NSUserDefaultsKeys.requestedMotion)
         }
@@ -981,7 +981,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     }
     
     /// Returns whether PermissionScope is waiting for the user to enable/disable motion access or not.
-    private var waitingForMotion = false
+    internal var waitingForMotion = false
     
     // MARK: - UI
     
@@ -1017,7 +1017,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     /**
     Creates the modal viewcontroller and shows it.
     */
-    private func showAlert() {
+    internal func showAlert() {
         // add the backing views
         let window = UIApplication.sharedApplication().keyWindow!
         
@@ -1114,7 +1114,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     /**
     Called when the users taps on the close button.
     */
-    func cancel() {
+    internal func cancel() {
         self.hide()
         
         if let onCancel = onCancel {
@@ -1129,7 +1129,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - parameter permission: Permission type.
     */
-    func showDeniedAlert(permission: PermissionType) {
+    internal func showDeniedAlert(permission: PermissionType) {
         // compile the results and pass them back if necessary
         if let onDisabledOrDenied = self.onDisabledOrDenied {
             self.getResultsForConfig({ results in
@@ -1163,7 +1163,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     - parameter permission: Permission type.
     */
-    func showDisabledAlert(permission: PermissionType) {
+    internal func showDisabledAlert(permission: PermissionType) {
         // compile the results and pass them back if necessary
         if let onDisabledOrDenied = self.onDisabledOrDenied {
             self.getResultsForConfig({ results in
@@ -1200,7 +1200,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     button to check on a disabled permission. It calls detectAndCallback
     to recheck all the permissions and update the UI.
     */
-    func appForegroundedAfterSettings() {
+    internal func appForegroundedAfterSettings() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         detectAndCallback()
@@ -1212,7 +1212,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     - parameter type:       Permission type to be requested
     - parameter completion: Closure called when the request is done.
     */
-    func statusForPermission(type: PermissionType, completion: statusRequestClosure) {
+    internal func statusForPermission(type: PermissionType, completion: statusRequestClosure) {
         // Get permission status
         let permissionStatus: PermissionStatus
         switch type {
@@ -1249,7 +1249,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     the PermissionScope UI in response and calls your onAuthChange
     to notifiy the parent app.
     */
-    func detectAndCallback() {
+    internal func detectAndCallback() {
         dispatch_async(dispatch_get_main_queue()) {
             // compile the results and pass them back if necessary
             if let onAuthChange = self.onAuthChange {
@@ -1274,7 +1274,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     /**
     Calculates the status for each configured permissions for the caller
     */
-    func getResultsForConfig(completionBlock: resultsForConfigClosure) {
+    internal func getResultsForConfig(completionBlock: resultsForConfigClosure) {
         var results: [PermissionResult] = []
         
         for config in configuredPermissions {
