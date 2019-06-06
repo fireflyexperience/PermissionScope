@@ -26,8 +26,8 @@ import Accounts
 }
 
 @objc open class NotificationsPermission: NSObject, Permission {
-    open let type: PermissionType = .notifications
-    open let notificationCategories: Set<UIUserNotificationCategory>?
+    public let type: PermissionType = .notifications
+    public let notificationCategories: Set<UIUserNotificationCategory>?
     
     public init(notificationCategories: Set<UIUserNotificationCategory>? = nil) {
         self.notificationCategories = notificationCategories
@@ -35,44 +35,44 @@ import Accounts
 }
 
 @objc open class LocationWhileInUsePermission: NSObject, Permission {
-    open let type: PermissionType = .locationInUse
+    public let type: PermissionType = .locationInUse
 }
 
 @objc open class LocationAlwaysPermission: NSObject, Permission {
-    open let type: PermissionType = .locationAlways
+    public let type: PermissionType = .locationAlways
 }
 
 @objc open class ContactsPermission: NSObject, Permission {
-    open let type: PermissionType = .contacts
+    public let type: PermissionType = .contacts
 }
 
 public typealias requestPermissionUnknownResult = () -> Void
 public typealias requestPermissionShowAlert     = (PermissionType) -> Void
 
 @objc open class EventsPermission: NSObject, Permission {
-    open let type: PermissionType = .events
+    public let type: PermissionType = .events
 }
 
 @objc open class MicrophonePermission: NSObject, Permission {
-    open let type: PermissionType = .microphone
+    public let type: PermissionType = .microphone
 }
 
 @objc open class CameraPermission: NSObject, Permission {
-    open let type: PermissionType = .camera
+    public let type: PermissionType = .camera
 }
 
 @objc open class PhotosPermission: NSObject, Permission {
-    open let type: PermissionType = .photos
+    public let type: PermissionType = .photos
 }
 
 @objc open class RemindersPermission: NSObject, Permission {
-    open let type: PermissionType = .reminders
+    public let type: PermissionType = .reminders
 }
 
 @objc open class BluetoothPermission: NSObject, Permission {
-    open let type: PermissionType = .bluetooth
+    public let type: PermissionType = .bluetooth
 }
 
 @objc open class MotionPermission: NSObject, Permission {
-    open let type: PermissionType = .motion
+    public let type: PermissionType = .motion
 }
